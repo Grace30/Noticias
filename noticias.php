@@ -25,14 +25,14 @@
     <hr>
     <section ng-controller='customerCtrl'>
         <article>
-            <header>{{noticia.Titulo}}</header>
-            <h6>{{noticia.Autor}} &nbsp; {{noticia.Fecha}}</h6>
-            <h4>{{noticia.Copete}}</h4>
-            <p>{{noticia.Cuerpo}}</p>
+            <header>{{principal.Titulo}}</header>
+            <h6>{{principal.Autor}} &nbsp; {{principal.Fecha}}</h6>
+            <h4>{{principal.Copete}}</h4>
+            <p>{{principal.Cuerpo}}</p>
         </article>
     </section>
     <aside ng-controller="customerCtrl2">
-        <a ng-repeat="noticia in noti"><id>{{noticia.ID}}</id>{{noticia.Titulo}}</a>
+        <a ng-href="?idNoticia={{noticia.ID}}" ng-repeat="noticia in noticias">{{noticia.Titulo}}</a>
     </aside>
     <a href="#" id="js_up" class="boton-subir">
         <i class="fa fa-rocket" aria-hidden="true"></i>
@@ -43,18 +43,16 @@
 </body>
 </html>
 <script> 
-var idNoti = <?php echo isset($_GET['idNoticia']) ? $_GET[idNoticia] : -1; ?> ;
+var idNoti = <?php echo isset($_GET['idNoticia']) ? $_GET['idNoticia'] : -1; ?> ;
 console.log(idNoti);
 var app = angular.module('myApp',[]);
 app.controller('customerCtrl', function($scope,$http){
-    $http.get("noticiasRegistros.php").then(function (response){
-        $scope.noti = response.data;
-        $scope.noticia = $scope.noti[0];
-        console.log($scope.noti);
+    $http.get("noticiasRegistros.php?idNoticia="+idNoti).then(function (response){
+        $scope.principal = response.data;
     });
 }).controller('customerCtrl2', function($scope,$http){
-    $http.get("noticiasRegistros.php").then(function (response){
-        $scope.noti = response.data;
+    $http.get("noticiasRegistros.php?noidNoticia="+idNoti).then(function (response){
+        $scope.noticias = response.data;
     });
 });
 
