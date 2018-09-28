@@ -58,6 +58,10 @@ section > article {
   margin-bottom: 10px;
 }
 
+section>article>p {
+  white-space: pre-wrap;
+}
+
 /*
 a#js_up {
     i.fa.fa-rocket[aria-hidden=true] {
